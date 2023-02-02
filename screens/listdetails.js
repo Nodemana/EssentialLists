@@ -13,6 +13,11 @@ export default function ListDetails({route, navigation}){
     const the_list = List.findById(the_list_id);
     const [selectedElements, setSelectedElements] = useState({});
 
+    // Update the value of selectedElements based on the condition
+    if (the_list.element_states.length > 0){
+        setSelectedElements(the_list.element_states);
+    }
+
   const element_container = the_list.elements.map((element, index) => (
     <View>
       <Checkbox
@@ -33,6 +38,23 @@ export default function ListDetails({route, navigation}){
       the_list.elements.push(inputValue)
       setModalVisible(!isModalVisible);
     };
+
+    const SaveAndReturn = () => {
+        the_list.element_states = selectedElements
+        console.log(selectedElements)
+        console.log(the_list.element_states)
+        navigation.navigate("Home")
+    }
+
+    React.useEffect(() => {
+        // Use `setOptions` to update the button that we previously specified
+        // Now the button includes an `onPress` handler to update the count
+        navigation.setOptions({
+          headerLeft: () => (
+            <Button onPress={() => SaveAndReturn()} title="Back" />
+          ),
+        });
+      }, [navigation]);
 
 return(
         <View>

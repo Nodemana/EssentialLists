@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { NavigationContainer, useNavigation} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {Text, Button, View, Modal, TextInput, Alert, Dimensions  } from 'react-native';
+import {Text, Button, View, Modal, TextInput, Alert, Dimensions, LogoTitle  } from 'react-native';
 import {StyleSheet} from 'react-native';
 import { MaterialIcons} from '@expo/vector-icons';
 import HomeScreen from './screens/home.js';
@@ -17,7 +17,14 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName = "Home">
         <Stack.Screen name = "Home" component = {HomeScreen} />
-        <Stack.Screen name = "List Details" component = {ListDetails}/>
+        <Stack.Screen name = "List Details" 
+                      component = {ListDetails} 
+                      options={({ navigation, route }) => ({
+                        // Add a placeholder button without the `onPress` to avoid flicker
+                        headerLeft: () => (
+                          <Button title="Back" />
+                        ),
+                      })}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
